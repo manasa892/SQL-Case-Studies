@@ -186,24 +186,6 @@ group by s.customer_id;
 
 
 
-
-
-
-/* 10.In the first week after a customer joins the program (including their join date) they earn 2x points on all 
- items, not just sushi - how many points do customer A and B have at the end of January? */
-
-Select
-	s.customer_id,
-    sum(case
-			when (datediff(day, me.join_date, s.order_date) between 0 and 7) or (m.product_id = 1) then m.price * 20
-            else m.price * 10
-		end) as Points
- from members as me
-	inner join sales as s on s.customer_id = me.customer_id
-    inner join menu as m on m.product_id = s.product_id
-where s.order_date >= me.join_date and s.order_date <= cast('2021-01-31' as DATE)
-group by s.customer_id;
-
 -- Bonus Question
 -- 1.Recreating the table
 Select 
